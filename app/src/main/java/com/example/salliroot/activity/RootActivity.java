@@ -48,8 +48,12 @@ public class RootActivity extends AppCompatActivity {
         rootlist.setAdapter(adapter);
 
         rootlist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id){
+                    Intent intent = new Intent(getApplicationContext(), ScenCreaterActivity.class);
+                    intent.putExtra("openE",true);
+                    intent.putExtra("rootShare", gson.toJson(rootShare));
+                    intent.putExtra("positionS", position);
+                    startActivity(intent);
             }
         });
     }
@@ -85,6 +89,7 @@ public class RootActivity extends AppCompatActivity {
 
     public void addScen(View view){
         Intent intent = new Intent(this, ScenCreaterActivity.class);
+        intent.putExtra("openE", false);
         intent.putExtra("rootShare", gson.toJson(rootShare));
         startActivity(intent);
     }

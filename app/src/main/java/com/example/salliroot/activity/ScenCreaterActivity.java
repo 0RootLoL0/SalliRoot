@@ -17,6 +17,7 @@ import com.example.salliroot.R;
 import com.example.salliroot.adapter.otvetAdapter;
 import com.example.salliroot.pojo.otvetObj;
 import com.example.salliroot.pojo.scena;
+import com.example.salliroot.tools.enDeJson;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -26,7 +27,9 @@ public class ScenCreaterActivity extends AppCompatActivity {
 
     private ListView listView;
     private EditText textOtvet;
-    private String rootShare;
+    private boolean openE;
+    private int elem = 0;
+    private enDeJson Rjc;
     private List<otvetObj> otvets = new ArrayList<otvetObj>();
 
     @Override
@@ -35,14 +38,17 @@ public class ScenCreaterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         listView = (ListView) findViewById(R.id.listView);
-
         textOtvet = (EditText) findViewById(R.id.textscen);
-        otvetAdapter adapter = new otvetAdapter(this, otvets);
-        listView.setAdapter(adapter);
 
         Bundle bundle = getIntent().getExtras();
-        rootShare = bundle.getString("rootShare");
-
+        Rjc = new enDeJson(bundle.getString("rootShare"));
+        openE = bundle.getBoolean("openE");
+        elem = bundle.getInt("positionS");
+        if (openE){
+            textOtvet.setText(Rjc.getScena(bundle.getInt("positionS")).getText());
+            otvets = Rjc.getScena(elem).getOtvets();
+        }
+        listView.setAdapter(new otvetAdapter(this, otvets));
     }
 
     @Override
@@ -66,12 +72,12 @@ public class ScenCreaterActivity extends AppCompatActivity {
     }
 
     private void backRoot() {
-        Gson gson = new Gson();
-        scena scena1 = new scena(textOtvet.getText().toString(), otvets);
-        String json = gson.toJson(scena1);
+        if (openE)
+            Rjc.addScena(new scena(textOtvet.getText().toString(), otvets));
+        else
+            Rjc.editScena(new scena(textOtvet.getText().toString(), otvets), elem);
         Intent intent = new Intent(this, RootActivity.class);
-        intent.putExtra("scenaJson", json);
-        intent.putExtra("rootShare", rootShare);
+        intent.putExtra("rootShare", Rjc.exportRoot());
         startActivity(intent);
     }
 
