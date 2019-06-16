@@ -2,4 +2,7 @@
     <string name="app_name">SalliRootCreator</string>
     <string name="create_root">create</string>
     <string name="imoprt_root">imoprt</string>
+    <string name="title_activity_www">View Root</string>
+    <string name="title_add">Add</string>
+    <string name="title_del">Delete</string>
 </resources>

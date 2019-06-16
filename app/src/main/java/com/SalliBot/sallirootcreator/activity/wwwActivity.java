@@ -2,9 +2,11 @@ package com.SalliBot.sallirootcreator.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -13,25 +15,40 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.SalliBot.sallirootcreator.R;
 import com.SalliBot.sallirootcreator.adapter.scenAdapter;
-import com.SalliBot.sallirootcreator.pojo.scena;
 import com.SalliBot.sallirootcreator.tools.ConvertJson;
-import com.google.gson.Gson;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class CreateActivity extends AppCompatActivity {
+public class wwwActivity extends AppCompatActivity {
 
     private ListView rootlist;
     private ConvertJson CJ;
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.add:
+                    addScen();
+                    return true;
+                case R.id.del:
+                    delScen();
+                    return true;
+            }
+            return false;
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create);
+        setContentView(R.layout.activity_www);
+
+        BottomNavigationView navView = findViewById(R.id.nav_view);
+        navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         if(getIntent()!=null && getIntent().getExtras()!=null) {
             Bundle bundle = getIntent().getExtras();
@@ -54,7 +71,6 @@ public class CreateActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
     }
 
     @Override
@@ -81,7 +97,7 @@ public class CreateActivity extends AppCompatActivity {
         }
     }
 
-    public void delScen(View v) {
+    public void delScen() {
         LayoutInflater li = LayoutInflater.from(this);
         View promptsView = li.inflate(R.layout.del_item, null);
         AlertDialog.Builder mDialogBuilder = new AlertDialog.Builder(this);
@@ -109,10 +125,11 @@ public class CreateActivity extends AppCompatActivity {
 
     }
 
-    public void addScen(View v) {
+    public void addScen() {
         Intent intent = new Intent(getApplicationContext(), ScenCreateActivity.class);
         intent.putExtra("rootJson", CJ.getJsonRootToString());
         intent.putExtra("editPosition", -1);
         startActivity(intent);
     }
+
 }

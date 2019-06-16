@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void ButtonCreate(View v){
-        Intent intent = new Intent(getApplicationContext(), CreateActivity.class);
+        Intent intent = new Intent(getApplicationContext(), wwwActivity.class);
         intent.putExtra("ItImport", false);
         startActivity(intent);
     }

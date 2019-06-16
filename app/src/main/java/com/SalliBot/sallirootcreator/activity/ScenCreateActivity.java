@@ -66,13 +66,13 @@ public class ScenCreateActivity extends AppCompatActivity {
             case R.id.ok:
                 if (editPosition > 0){
                     CJ.setScenInJsonRoot(editPosition, textOtvet.getText().toString(), otvets);
-                    Intent intent = new Intent(getApplicationContext(), CreateActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), wwwActivity.class);
                     intent.putExtra("ItImport", true);
                     intent.putExtra("rootJson", CJ.getJsonRootToString());
                     startActivity(intent);
                 } else {
                     CJ.addScenInJsonRoot(textOtvet.getText().toString(), otvets);
-                    Intent intent = new Intent(getApplicationContext(), CreateActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), wwwActivity.class);
                     intent.putExtra("ItImport", true);
                     intent.putExtra("rootJson", CJ.getJsonRootToString());
                     startActivity(intent);
