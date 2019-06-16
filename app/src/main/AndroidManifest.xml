@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activity.wwwActivity"
+            android:name=".activity.CreateActivity"
             android:label="@string/title_activity_www"></activity>
         <activity android:name=".activity.ScenCreateActivity" />
         <activity android:name=".activity.ImportActivity" />

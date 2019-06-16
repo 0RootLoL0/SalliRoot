@@ -5,6 +5,7 @@ import com.SalliBot.sallirootcreator.pojo.scena;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ConvertJson {
@@ -29,6 +30,10 @@ public class ConvertJson {
 
     public void removeScenInJsonRoot(int position){
         jsonRoot.remove(position);
+    }
+
+    public void removeAllScenInJsonRoot(){
+        jsonRoot = new ArrayList<scena>();
     }
 
     public void addScenInJsonRoot(String textOtveta, List<otvetObj> otvetObjs){

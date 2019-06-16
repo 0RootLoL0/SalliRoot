@@ -2,7 +2,9 @@ package com.SalliBot.sallirootcreator.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.UserHandle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -15,15 +17,15 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.SalliBot.sallirootcreator.R;
 import com.SalliBot.sallirootcreator.adapter.scenAdapter;
 import com.SalliBot.sallirootcreator.tools.ConvertJson;
 
-public class wwwActivity extends AppCompatActivity {
+public class CreateActivity extends AppCompatActivity {
 
     private ListView rootlist;
+    final String setting = "salliScript";
     private ConvertJson CJ;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -45,7 +47,7 @@ public class wwwActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_www);
+        setContentView(R.layout.activity_create);
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -71,6 +73,8 @@ public class wwwActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        autosave();
     }
 
     @Override
@@ -110,6 +114,7 @@ public class wwwActivity extends AppCompatActivity {
                         if (CJ.getSizeJsonRoot() != 0) {
                             if (Integer.parseInt(userInput.getText().toString()) <= CJ.getSizeJsonRoot()) {
                                 CJ.removeScenInJsonRoot(Integer.parseInt(userInput.getText().toString()));
+                                autosave();
                             }
                         }
                     }
@@ -132,4 +137,10 @@ public class wwwActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void autosave() {
+        SharedPreferences sPref = getSharedPreferences("MyPref", MODE_PRIVATE);
+        SharedPreferences.Editor ed = sPref.edit();
+        ed.putString(setting, CJ.getJsonRootToString());
+        ed.commit();
+    }
 }

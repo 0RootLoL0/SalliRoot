@@ -34,7 +34,7 @@ public class ImportActivity extends AppCompatActivity {
         switch (item.getItemId())
         {
             case R.id.importRoot:
-                Intent intent = new Intent(getApplicationContext(), wwwActivity.class);
+                Intent intent = new Intent(getApplicationContext(), CreateActivity.class);
                 intent.putExtra("ItImport", true);
                 intent.putExtra("rootJson", importroot.getText().toString());
                 startActivity(intent);

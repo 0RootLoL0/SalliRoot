@@ -20,6 +20,15 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <Button
+            android:id="@+id/loadButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_load"
+            android:onClick="ButtonLoad"
+            android:text="@string/load_root"
+            tools:visibility="gone" />
+
+        <Button
             android:id="@+id/button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -5,4 +5,5 @@
     <string name="title_activity_www">View Root</string>
     <string name="title_add">Add</string>
     <string name="title_del">Delete</string>
+    <string name="load_root">load</string>
 </resources>
