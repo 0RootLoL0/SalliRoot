@@ -7,4 +7,7 @@
         android:icon="@drawable/ic_share_menu"
         android:title="share"
         app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/statistic"
+        android:title="statistic" />
 </menu>

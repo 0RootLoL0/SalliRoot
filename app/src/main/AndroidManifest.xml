@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.SalliBot.sallirootcreator">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,9 +12,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".activity.statisticActivity"></activity>
         <activity
             android:name=".activity.CreateActivity"
-            android:label="@string/title_activity_www"></activity>
+            android:label="@string/title_activity_www" />
         <activity android:name=".activity.ScenCreateActivity" />
         <activity android:name=".activity.ImportActivity" />
         <activity android:name=".activity.MainActivity">

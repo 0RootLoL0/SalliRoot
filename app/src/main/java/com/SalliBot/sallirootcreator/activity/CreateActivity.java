@@ -96,6 +96,12 @@ public class CreateActivity extends AppCompatActivity {
                 sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, CJ.getJsonRootToString());
                 startActivity(Intent.createChooser(sharingIntent, "Ого готовый Root ?!"));
                 return true;
+
+            case R.id.statistic:
+                Intent intent = new Intent(getApplicationContext(), statisticActivity.class);
+                intent.putExtra("rootJson", CJ.getJsonRootToString());
+                startActivity(intent);
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
