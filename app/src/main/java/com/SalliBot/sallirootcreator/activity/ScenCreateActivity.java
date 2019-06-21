@@ -10,8 +10,10 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.SalliBot.sallirootcreator.R;
 import com.SalliBot.sallirootcreator.adapter.otvetAdapter;
@@ -41,11 +43,17 @@ public class ScenCreateActivity extends AppCompatActivity {
         CJ = new ConvertJson(bundle.getString("rootJson"));
         editPosition = bundle.getInt("editPosition");
 
-        if (editPosition > 0){
+        if (editPosition >= 0){
             scena editScen = CJ.getScen(editPosition);
             textOtvet.setText(editScen.getText());
             otvets = editScen.getOtvets();
         }
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+                editOtvetItem(position);
+            }
+        });
 
         otvetAdapter adapter = new otvetAdapter(this, otvets);
         listView.setAdapter(adapter);
@@ -64,7 +72,7 @@ public class ScenCreateActivity extends AppCompatActivity {
         switch (item.getItemId())
         {
             case R.id.ok:
-                if (editPosition > 0){
+                if (editPosition >= 0){
                     CJ.setScenInJsonRoot(editPosition, textOtvet.getText().toString(), otvets);
                     Intent intent = new Intent(getApplicationContext(), CreateActivity.class);
                     intent.putExtra("ItImport", true);
@@ -136,5 +144,37 @@ public class ScenCreateActivity extends AppCompatActivity {
         AlertDialog alertDialog = mDialogBuilder.create();
         alertDialog.show();
 
+    }
+
+    private void editOtvetItem(final int position){
+        LayoutInflater li = LayoutInflater.from(this);
+        View promptsView = li.inflate(R.layout.add_otvet, null);
+        AlertDialog.Builder mDialogBuilder = new AlertDialog.Builder(this);
+        mDialogBuilder.setView(promptsView);
+        final EditText userInput = (EditText) promptsView.findViewById(R.id.input_text);
+        final EditText userInput1 = (EditText) promptsView.findViewById(R.id.input_text1);
+        final EditText userInput2 = (EditText) promptsView.findViewById(R.id.input_text2);
+
+        userInput.setText(otvets.get(position).getText());
+        userInput1.setText(Integer.toString(otvets.get(position).getScena()));
+        userInput2.setText(Integer.toString(otvets.get(position).getRoot()));
+
+        mDialogBuilder.setCancelable(false);
+        mDialogBuilder.setPositiveButton("OK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        otvets.set(position, new otvetObj(userInput.getText().toString(),
+                                Integer.parseInt(userInput1.getText().toString()),
+                                Integer.parseInt(userInput2.getText().toString())));
+                    }
+                });
+        mDialogBuilder.setNegativeButton("Отмена",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+        AlertDialog alertDialog = mDialogBuilder.create();
+        alertDialog.show();
     }
 }
